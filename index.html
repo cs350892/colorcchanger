@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chandra Dynamic Qoutes</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+
+
+            <div lang="en">
+                <q id="qoutes"></q>
+            </div>
+           
+
+                <div lang="en">
+                    <q id="author"></q>
+                </div>
+           
+
+            <button class="btn" onclick="getNewQoutes()">new Qoutes</button>
+            <button class="btn" id="tweet">
+                <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=" data-size="large">
+                    Tweet</a>
+        
+            </button>
+        </div>
+           
+       
+        <script>
+
+            const author = document.getElementById("author");
+            const tweet = document.getElementById("tweet");
+            const qoutes = document.getElementById("qoutes")
+            const btn = document.getElementsByClassName('btn');
+            let realdata = "";
+
+            const tweetNow = () => {
+                twt = `https://twitter.com/intent/tweet?text=${
+                    realdata.text
+                }`;
+                window.open(twt)
+            }
+
+            getNewQoutes = () => {
+                let rnum = Math.floor(Math.random() * 20);
+
+                // console.log(realdata[rnum].text);
+                qoutes.innerHTML = realdata[rnum].text;
+                author.innerHTML = realdata[rnum].author;
+            }
+
+            const getQoutes = async () => {
+                const api = "https://type.fit/api/quotes";
+                try {
+                    let data = await fetch(api);
+                    realdata = await data.json();
+                    //    console.log(realdata[5].text);
+                    //    console.log(realdata[10].author)
+                    getNewQoutes();
+                } catch (error) {}
+
+            }
+            // function refresh(){
+            //     window.location.reload("Refresh");
+            // }
+
+            // btn.addEventListener("click", ()=>{
+            //     window.location.reload("Refresh");
+            // });
+
+            tweet.addEventListener('click', tweetNow)
+            getQoutes();
+        </script>
+    </body>
+</html>
